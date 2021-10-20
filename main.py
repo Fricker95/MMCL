@@ -7,15 +7,17 @@ Created by Nicolas Fricker on 1/1/21.
 Copyright © 2021 Nicolas Fricker. All rights reserved.
 """
 
-from Transformations 		import *
-from MFPT 					import *
+from MMCL import *
 
-from Utils 					import percentageDifference, writeCSV, readCSV
-from Brownian 				import brownian
-from HyperSpace 			import Point, Vector, Plane
-from HyperSphere 			import Intersection, HyperSphere
-from Polygon 				import Polygon
-from CamKII 				import CamKII
+# from Transformations 		import *
+# from MFPT 					import *
+
+# from Utils 					import percentageDifference, writeCSV, readCSV
+# from Brownian 				import brownian
+# from HyperSpace 			import Point, Vector, Plane
+# from HyperSphere 			import Intersection, HyperSphere
+# from Polygon 				import Polygon
+# from CamKII 				import CamKII
 
 ################# IN TESTING #################
 
@@ -141,7 +143,7 @@ def main():
 	# simulations_sphere_in_sphere(2)
 	# simulations_sphere_in_sphere(3)
 
-	simplified_simulation_sphere_in_sphere_plot(1, 10, 100, 2, 1, 1e9 )
+	# simplified_simulation_sphere_in_sphere_plot(1, 10, 100, 2, 1, 1e9 )
 	# simplified_simulation_sphere_in_sphere_plot(10, 10, 100, 3, 1, 1e9)
 
 	# simplified_simulation_CAMKII_1_sphere_in_sphere_plot(1, 100, 2, 1, 1e6)

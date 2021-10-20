@@ -26,15 +26,15 @@ import sys
 
 from pprint 				import pprint
 
-from Transformations 		import *
-from MFPT 					import *
+from MMCL.Transformations 		import *
+from MMCL.MFPT 					import *
 
-from Utils 					import percentageDifference, writeCSV, readCSV
-from Brownian 				import brownian
-from HyperSpace 			import Point, Vector, Plane
-from HyperSphere 			import Intersection, HyperSphere
-from Polygon 				import Polygon
-from CamKII 				import CamKII
+from MMCL.Utils 					import percentageDifference, writeCSV, readCSV
+from MMCL.Brownian 				import brownian
+from MMCL.HyperSpace 			import Point, Vector, Plane
+from MMCL.HyperSphere 			import Intersection, HyperSphere
+from MMCL.Polygon 				import Polygon
+from MMCL.CamKII 				import CamKII
 
 
 hv.extension('matplotlib')

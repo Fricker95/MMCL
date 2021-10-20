@@ -6,10 +6,10 @@ HyperSphere.py
 Created by Nicolas Fricker on 1/1/21.
 Copyright © 2021 Nicolas Fricker. All rights reserved.
 """
-from Transformations 	import *
+from MMCL.Transformations 	import *
 
-from Utils 				import isBetween
-from HyperSpace 		import Point, Vector, Plane
+from MMCL.Utils 			import isBetween
+from MMCL.HyperSpace 		import Point, Vector, Plane
 
 import numpy as np
 import enum

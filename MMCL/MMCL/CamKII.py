@@ -7,9 +7,9 @@ Created by Nicolas Fricker on 1/1/21.
 Copyright © 2021 Nicolas Fricker. All rights reserved.
 """
 
-from Polygon 			import Polygon
-from HyperSpace 		import Point, Vector, Plane
-from HyperSphere 		import Intersection, HyperSphere
+from MMCL.Polygon 			import Polygon
+from MMCL.HyperSpace 		import Point, Vector, Plane
+from MMCL.HyperSphere 		import Intersection, HyperSphere
 
 import numpy as np
 import sys
