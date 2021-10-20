@@ -29,7 +29,7 @@ from pprint 				import pprint
 from MMCL.Transformations 		import *
 from MMCL.MFPT 					import *
 
-from MMCL.Utils 					import percentageDifference, writeCSV, readCSV
+from MMCL.Utils 				import percentageDifference, writeCSV, readCSV
 from MMCL.Brownian 				import brownian
 from MMCL.HyperSpace 			import Point, Vector, Plane
 from MMCL.HyperSphere 			import Intersection, HyperSphere

@@ -143,7 +143,7 @@ def main():
 	# simulations_sphere_in_sphere(2)
 	# simulations_sphere_in_sphere(3)
 
-	# simplified_simulation_sphere_in_sphere_plot(1, 10, 100, 2, 1, 1e9 )
+	simplified_simulation_sphere_in_sphere_plot(1, 10, 100, 2, 1, 1e9 )
 	# simplified_simulation_sphere_in_sphere_plot(10, 10, 100, 3, 1, 1e9)
 
 	# simplified_simulation_CAMKII_1_sphere_in_sphere_plot(1, 100, 2, 1, 1e6)
