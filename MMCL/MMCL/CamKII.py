@@ -20,7 +20,6 @@ class CamKII(object):
 	class Subunit(HyperSphere):
 		"""Subunit Object Class"""
 		def __init__(self, radius = 1, dim = 3, origin = None):
-			# super(Subunit, self).__init__()
 			HyperSphere.__init__(self, radius, dim, origin)
 			self.activated = False
 			self.intersection_point = None

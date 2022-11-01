@@ -520,7 +520,7 @@ class Vector(object):
 		return self._points[0].y - self.slope() * self._points[0].x
 
 	def point(self, d):
-		return self.origin + self.moment * d
+		return Point(*(self.origin + self.moment * d))
 
 	def skew(self):
 		"""

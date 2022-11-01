@@ -121,16 +121,6 @@ class HyperSphere(object):
 			theta = theta[:,0]
 			phi = phi[0,:]
 
-		# sins = np.array([np.sin(phi)**i if i < self._dim-1
-		# 								else np.sin(phi)**(i-1*(i != 0))
-		# 								for i in reversed(range(self._dim))])
-
-		# coords = np.array([self._origin.euclidean[i] + self._radius * sins[i] 
-		# 					* (np.cos(theta) * (i == 0) 
-		# 					+ np.sin(theta) * (i == 1) 
-		# 					+ np.cos(phi) * (i > 1)) 
-		# 					for i in range(self._dim)])
-
 		sins = (np.sin(phi)**i if i < self._dim-1
 								else np.sin(phi)**(i-1*(i != 0))
 								for i in reversed(range(self._dim)))
@@ -275,10 +265,23 @@ class HyperSphere(object):
 		# transformation matrix compounding
 		T = T1 @ T2
 
+		print(T3)
+		tmp = np.dot(T, p2.homogeneous)
+		print(tmp)
+		tmp = np.dot(T3, tmp)
+		print(tmp)
+		iv = np.linalg.inv(T)
+		print(iv)
+		print(np.dot(iv, tmp))
+		sys.exit()
+
 		# transformation and reflection of outside point
 		dot = Point(*np.dot(T3, np.dot(T, p2.homogeneous)))
 		# inverse transformation of outside point
 		dot = Point(*np.dot(np.linalg.inv(T), dot.homogeneous))
+
+		print(T)
+		print(np.linalg.inv(T))
 
 		# bad bug fix reflection outside point
 		if np.linalg.norm(dot.euclidean) > self.radius and np.linalg.norm(p1.euclidean) < self.radius:

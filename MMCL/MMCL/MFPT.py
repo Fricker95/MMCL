@@ -21,13 +21,13 @@ def getD(R, dt):
 	return ((R / 4)**2) / (dt * 6)
 
 def mfpt_analytic_3D(D, R1, R2):
-		return (R2**2)/(3*D) * (R2/R1 - (1/2))
+		return (R2**2) / (3 * D) * (R2 / R1 - (1 / 2))
 
 def mfpt_analytic_2D(D, R1, R2):
-		return (R2**2)/(2*D) * (np.log(R2/R1) - (1/2))
+		return (R2**2) / (2 * D) * (np.log(R2 / R1) - (1 / 2))
 
 def adjustable_dt(distance):
-	return np.log(distance)/4
+	return np.log(distance) / 4
 
 
 
