@@ -32,8 +32,9 @@ from MMCL.MFPT 					import *
 from MMCL.Utils 				import percentageDifference, writeCSV, readCSV
 from MMCL.Brownian 				import brownian
 from MMCL.HyperSpace 			import Point, Vector, Plane
-from MMCL.HyperSphere 			import Intersection, HyperSphere
+from MMCL.HyperSphere 			import Intersection, HyperSphere, HemiSphere
 from MMCL.Polygon 				import Polygon
+from MMCL.Cylinder 				import Cylinder
 from MMCL.CamKII 				import CamKII
 
 

@@ -10,6 +10,8 @@ Copyright © 2021 Nicolas Fricker. All rights reserved.
 import numpy as np
 import sys
 
+from numpy.lib.arraysetops import isin
+
 class Point(object):
 	"""Homogeneous Point Ojbect Class"""
 	
@@ -59,10 +61,13 @@ class Point(object):
 		return f"{self._coords[:-1]}"
 
 	def __cmp__(self, other):
-		return cmp(self._coords, other.homogeneous)
+		return np.__cmp__(self._coords, other.homogeneous)
 
 	def __len__(self):
 		return len(self._coords)
+
+	def __neg__(self):
+		return self.euclidean * -1
 
 	def __add__(self, other):
 		if isinstance(other, Point):
@@ -230,6 +235,12 @@ class Point(object):
 		if self._coords[-1] != 0:
 			self._coords /= self._coords[-1]
 
+	@staticmethod
+	def to_points(x, homogeneous=False):
+		if homogeneous:
+			return np.array([Point(*i).homogeneous for i in x])
+		else:
+			return np.array([Point(*i).euclidean for i in x])
 
 class Vector(object):
 	"""Vector Ojbect Class"""
@@ -278,6 +289,10 @@ class Vector(object):
 			return np.linalg.norm(self._points[1].homogeneous - self._points[0].homogeneous)
 		elif attr == "coefs":
 			return Point(*np.cross(*self._points))
+		elif attr == "p1":
+			return self._points[1]
+		elif attr == "p0":
+			return self._points[0]
 		else:
 			raise AttributeError(f"{self.__class__.__name__} object has no attribute {attr}")
 
@@ -288,7 +303,7 @@ class Vector(object):
 		return f"{np.array([*self._points])}"
 
 	def __cmp__(self, other):
-		return cmp(self.homogeneous, other.homogeneous)
+		return np.__cmp__(self.homogeneous, other.homogeneous)
 
 	def __eq__(self, other):
 		return np.all(self.homogeneous == other.homogeneous)
@@ -298,6 +313,9 @@ class Vector(object):
 
 	def __len__(self):
 		return len(self._points)
+
+	def __getitem__(self, i):
+		return self._points[::-1][i]
 
 	def __add__(self, other):
 		if isinstance(other, Vector):

@@ -8,7 +8,7 @@ Copyright © 2021 Nicolas Fricker. All rights reserved.
 """
 from MMCL.Transformations 	import *
 
-from MMCL.Utils 			import isBetween
+from MMCL.Utils 			import base10_exponent, isBetween
 from MMCL.HyperSpace 		import Point, Vector, Plane
 
 import numpy as np
@@ -90,6 +90,19 @@ class HyperSphere(object):
 		h = np.linalg.norm(self._radius - p[-1])
 		alpha = np.arcsin(((self._radius - h) / self._radius))
 		return alpha
+
+	def contains(self, point):
+		if not isinstance(point, Point):
+			if (isinstance(point, np.ndarray) or isinstance(point, list)):
+				point = Point(*point)
+			else:
+				raise ValueError("Point must be Point Ojbect or list")
+
+		p = point.euclidean
+		c = self._origin.euclidean
+		r = self._radius
+		ds = np.sum(np.power(p - c, 2))
+		return ds <= r**2
 
 	def random(self, size = 1, alpha = 0):
 		"""
@@ -292,4 +305,84 @@ class HyperSphere(object):
 		# return line from intersection to the reflection
 		return Vector(dot, inters)
 
+class HemiSphere(HyperSphere):
+	"""
+	HyperSphere Object Class
+	"""
+
+	def __init__(self, radius=1, origin=None):
+		super(HemiSphere, self).__init__(radius, 3, origin)
+
+	def __call__(self, orientation='z', size=100):
+		return self._points(orientation, size)
+
+	def _points(self, orientation='z', size=100):
+		"""
+		Get size number of points to graph a hemisphere
 	
+		use ax.plot_wireframe(*HemiSphereObject(), label = "HemiSphere")
+		"""
+		theta, phi = np.mgrid[0:2*np.pi:complex(0, size), 0:np.pi/2:complex(0, size)]
+
+		if orientation == 'z':
+			coords = np.array([
+				self._radius * np.cos(theta) * np.sin(phi) + self._origin.x,
+				self._radius * np.sin(theta) * np.sin(phi) + self._origin.y,
+				self._radius * np.cos(phi) + self._origin.z
+			])
+		elif orientation == 'y':
+			coords = np.array([
+				self._radius * np.cos(theta) * np.sin(phi) + self._origin.x,
+				self._radius * np.cos(phi) + self._origin.y,
+				self._radius * np.sin(theta) * np.sin(phi) + self._origin.z,
+			])
+		elif orientation == 'x':
+			coords = np.array([
+				self._radius * np.cos(phi) + self._origin.x,
+				self._radius * np.sin(theta) * np.sin(phi) + self._origin.y,
+				self._radius * np.cos(theta) * np.sin(phi) + self._origin.z
+			])
+		else:
+			raise ValueError
+
+		return coords
+
+	def scatter(self, density, max_d, orientation='z', size=100):
+		#norm = density * self._radius / size
+		norm = density
+		norm = np.nan_to_num(norm, nan=0)
+
+		scale = base10_exponent(max_d)
+		norm *= 10**(2 - scale)
+		norm = norm.astype(int)
+
+		points = []
+		colors = []
+		for i in range(len(density)):
+			num_points = norm[i]
+			theta = np.random.uniform(0, 2 * np.pi, num_points)
+			phi = np.random.uniform(0, np.pi / 2, num_points)  # For hemisphere
+
+			r = self._radius * np.cbrt(np.random.uniform(0, 1, num_points))  # Cube root for uniform distribution in volume
+
+			if orientation == 'z':
+				x = r * np.sin(phi) * np.cos(theta) + self._origin.x
+				y = r * np.sin(phi) * np.sin(theta) + self._origin.y
+				z = r * np.cos(phi) + self._origin.z
+			elif orientation == 'y':
+				x = r * np.sin(phi) * np.cos(theta) + self._origin.x
+				z = r * np.sin(phi) * np.sin(theta) + self._origin.z
+				y = r * np.cos(phi) + self._origin.y
+			elif orientation == 'x':
+				z = r * np.sin(phi) * np.cos(theta) + self._origin.z
+				y = r * np.sin(phi) * np.sin(theta) + self._origin.y
+				x = r * np.cos(phi) + self._origin.x
+			else:
+				raise ValueError("Invalid orientation")
+
+			points.append(np.vstack((x, y, z)))
+			colors.append(np.full_like(x, density[i]))
+
+		points = np.hstack(points).T
+		colors = np.hstack(colors).T
+		return (points[:, 0], points[:, 1], points[:, 2]), colors	

@@ -61,6 +61,11 @@ def readCSV(fdir):
 			data.append(row)
 	return data
 
+def base10_exponent(x):
+    if x == 0:
+        return 0  # Handle zero case
+    return int(np.floor(np.log10(abs(x))))
+
 
 
 	
